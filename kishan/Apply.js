@@ -43,6 +43,9 @@ const {width, height} = Dimensions.get('window');
 import {Picker} from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { postData } from './FetchService';
+import {selectedLanguage} from './helper/ChangeLng';
+import Strings from './constant/LocalizedStrings';
+
 
 
 const Horidata = [
@@ -365,6 +368,7 @@ const styles = StyleSheet.create({
 });
 
 export default function Apply(props) {
+  const [getSelectedLanguage, setSelectedLanguage] = useState('');
 
   const [show, setShow] = useState(false);
   const [getStatus, setStatus] = useState('')
@@ -410,8 +414,17 @@ export default function Apply(props) {
   
 
   useEffect(()=>{
-      console.log('coming props on Apply page',props.route.params.policyId , props.route.params.kisanId)
-      setpropPolicy(props.route.params.policyId)
+      // console.log('coming props on Apply page',props.route.params.policyId , props.route.params.kisanId)
+      // setpropPolicy(props.route.params.policyId)
+      selectedLanguage()
+      .then(res => {
+        console.log(res);
+        setSelectedLanguage(res);
+        console.log(Strings.Add);
+        console.log(Strings.All);
+      })
+      .catch(() => {});
+      
   },[])
 
   // const fillPolicyId=()=>{
@@ -440,7 +453,8 @@ export default function Apply(props) {
     if(result)
     {
       alert('Policy Applied..')
-      props.navigation.navigate('KShowPolicy',{kisanId:kisanIdddddd})
+      alert(JSON.stringify(body))
+      props.navigation.navigate('KShowPolicy')
     }
   }
 
@@ -519,7 +533,7 @@ export default function Apply(props) {
               color: '#464646',
               fontWeight: 'bold',
             }}>
-            Apply Policy
+        { getSelectedLanguage =='Hindi' ? Strings.Policy + " " +Strings.Apply : Strings.Apply + " "+ Strings.Policy }  
           </Text>
         </View>
         <View style={{marginVertical: 5}} />
@@ -551,7 +565,7 @@ export default function Apply(props) {
             </View>
           </View>
 
-          <Text style={{marginTop:20,marginBottom:-20}}>Policy Id</Text>
+          <Text style={{marginTop:20,marginBottom:-20}}>{Strings.Policy} {Strings.Id}</Text>
 
           <View  
           
@@ -613,7 +627,7 @@ export default function Apply(props) {
                */}
                 <TextInput  placeholder="Policy Id" editable={false} color="black">{policyiddd}</TextInput>
           </View>
-          <Text style={{marginTop:20,marginBottom:-20}}>Kisan Id</Text>
+          <Text style={{marginTop:20,marginBottom:-20}}>{Strings.Kisan} {Strings.Id}</Text>
           <View 
            style={{
             borderStartWidth: 1,
@@ -644,7 +658,7 @@ export default function Apply(props) {
             <TextInput  placeholder="Kisan Id" editable={false} color="black">{kisanIdddddd}</TextInput>
           </View>
 
-          <Text style={{marginTop:20,marginBottom:-20}} >Date for Apply</Text>
+          <Text style={{marginTop:20,marginBottom:-20}} >{Strings.Dateforapply}</Text>
           <View 
            style={{
             borderStartWidth: 1,
@@ -672,7 +686,7 @@ export default function Apply(props) {
           }}
           >
           <TouchableOpacity onPress={showDatePicker}>
-           <TextInput placeholder="Choose Date" editable={false} value={applyDate} color="black"></TextInput>
+           <TextInput placeholder={Strings.ChooseDate} editable={false} value={applyDate} color="black"></TextInput>
            </TouchableOpacity>
            { show && (
           <DateTimePicker
@@ -689,7 +703,7 @@ export default function Apply(props) {
           </View>
 
 
-          <Text style={{marginTop:20,marginBottom:-20}}>Status </Text>
+          <Text style={{marginTop:20,marginBottom:-20}}>{Strings.Status}</Text>
 
             <View 
              style={{
@@ -721,7 +735,7 @@ export default function Apply(props) {
                     onValueChange={(text)=>handleStatus(text)}
 
                     >
-                    <Picker.Item label="Status"  color="#7a7a7a"  />
+                    <Picker.Item label={Strings.Status} color="#7a7a7a"  />
                     <Picker.Item label="Pending" value="Pending"  />
                      {/* {fillStates()}  */}
                   </Picker>
@@ -762,7 +776,7 @@ export default function Apply(props) {
                         fontSize: 20,
                         // fontFamily: FontFamily.regular,
                       }}>
-                      Apply{' '}
+                      {Strings.Apply}{' '}
                     </Text>
                     {/* <Animatable.Text
                       animation="fadeIn"

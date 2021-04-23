@@ -41,6 +41,9 @@ import { getData, ServerURL } from './FetchService';
 const {width, height} = Dimensions.get('window');
 //const BannerWidth = Dimensions.get('window').width;
 //const BannerHeight = 260;
+import {selectedLanguage} from './helper/ChangeLng';
+import Strings from './constant/LocalizedStrings';
+
 
 const Horidata = [
   {
@@ -132,7 +135,7 @@ function HorizontalList({item, props}) {
 
               <View
                 style={{
-                  width: width * 0.5,
+                  width: width * 0.4,
                   justifyContent: 'center',
                   // alignItems: 'center',
                   alignSelf: 'center',
@@ -145,14 +148,16 @@ function HorizontalList({item, props}) {
                       fontSize: 15,
                       fontWeight: 'bold',
                     }}>
-                   Policy Name :
+                  {Strings.Policy} {Strings.Name} :
 
                   </Text>
                   <Text
                     style={{
+                      width: width * 0.4,
                       color: '#1ac9ff',
                       fontSize: 15,
                       fontWeight: 'bold',
+                      marginLeft:28
                     }}>
                     {item.policiesname},
 
@@ -165,7 +170,7 @@ function HorizontalList({item, props}) {
                       fontSize: 12,
                       fontWeight: 'bold',
                     }}>
-                  Organization :
+                  {Strings.Organization} :
 
                   </Text>
                
@@ -189,7 +194,7 @@ function HorizontalList({item, props}) {
                       // marginLeft: 17,
                       fontWeight: 'bold',
                     }}>
-                  Description :
+                  {Strings.Description} :
 
                   </Text>
                   <Text
@@ -213,7 +218,7 @@ function HorizontalList({item, props}) {
                 
                       fontWeight: 'bold',
                     }}>
-                  Web Link :
+                  {Strings.WebLink} :
 
                   </Text>
 
@@ -242,7 +247,7 @@ function HorizontalList({item, props}) {
                 
                       fontWeight: 'bold',
                     }}>
-                  Video Link :
+                  {Strings.VideoLink} :
 
                   </Text>
                   <TouchableOpacity
@@ -300,7 +305,7 @@ function HorizontalList({item, props}) {
                       style={{color: '#1ac9ff'}}
                     /> */}
                     <Text style={{color: '#1ac9ff', fontWeight: 'bold'}}>
-                      Apply
+                      {Strings.Apply}
                     </Text>
                   </View>
                 </TouchableOpacity>
@@ -509,7 +514,7 @@ const styles = StyleSheet.create({
 export default function Employee(props) {
 
   const [policyList, setPolicyList] = useState([])
-
+  const [getSelectedLanguage, setSelectedLanguage] = useState('');
 
 
   const fetchPolicies=async()=>{
@@ -520,6 +525,15 @@ export default function Employee(props) {
 
   useEffect(() => {
     fetchPolicies();
+    selectedLanguage()
+      .then(res => {
+        console.log(res);
+        setSelectedLanguage(res);
+        console.log(Strings.Add);
+        console.log(Strings.All);
+      })
+      .catch(() => {});
+      
   },[])
 
   return (
@@ -596,7 +610,7 @@ export default function Employee(props) {
               color: '#464646',
               fontWeight: 'bold',
             }}>
-            All Goverment Farmers Policy
+            {Strings.All} {Strings.Government} {Strings.Farmers} {Strings.Policy}
           </Text>
         </View>
         <View style={{marginVertical: 5}} />
@@ -623,7 +637,7 @@ export default function Employee(props) {
                     fontSize: 12,
                   }}
                   placeholderTextColor="#535353"
-                  placeholder="Search"></TextInput>
+                  placeholder={Strings.Search}></TextInput>
               </View>
             </View>
           </View>

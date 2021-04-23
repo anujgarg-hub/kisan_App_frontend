@@ -1,4 +1,4 @@
-import React, {Component, useRef, useState} from 'react';
+import React, {Component, useEffect,useRef, useState} from 'react';
 import {
   TouchableOpacity,
   Dimensions,
@@ -28,6 +28,10 @@ import ActionButton from 'react-native-circular-action-menu';
 // import COIcon from 'react-native-vector-icons/Ionicons';
 import LottieView from 'lottie-react-native';
 import { postData } from './FetchService';
+import {selectedLanguage} from './helper/ChangeLng';
+import Strings from './constant/LocalizedStrings';
+
+
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
@@ -175,11 +179,27 @@ const styles = StyleSheet.create({
 
 export default function Login(props) {
 
+  const [getSelectedLanguage, setSelectedLanguage] = useState('');
+
   const [getkisanId, setKisanId] = useState('')
   const [mobile, setMobile] = useState('')
   const [password, setPassword] = useState('')
 
   var kisanId =0;
+  
+  useEffect(() => {
+    // fetchKisanId()
+    selectedLanguage()
+      .then(res => {
+        console.log(res);
+        setSelectedLanguage(res);
+        console.log(Strings.Add);
+        console.log(Strings.All);
+      })
+      .catch(() => {});
+      
+  }, []);
+
 
   const handleSubmit = () => {
     // props.navigation.navigate("Homeretailer")
@@ -204,7 +224,7 @@ export default function Login(props) {
     }
     else
     {
-      alert('Please Enter Right mobile/password..')
+      alert(`${Strings.Pleaseentercorrectmobilepassword}`)
     }
   }
   // fadeAnim will be used as the value for opacity. Initial Value: 0
@@ -274,7 +294,7 @@ export default function Login(props) {
               borderBottomWidth: 0.5,
               borderColor: '#000',
             }}>
-            LOGIN
+           {Strings.LOGIN}
           </Text>
         </View>
         <View
@@ -291,7 +311,7 @@ export default function Login(props) {
               fontFamily: FontFamily.regular,
               fontSize: 11,
             }}>
-            Please enter your Mobile No.and password.
+           {Strings.Pleaseenteryourvalidmobilenumberandpassword}
           </Text>
         </View>
         <View>
@@ -304,7 +324,7 @@ export default function Login(props) {
             <View style={{width: width * 0.9}}>
               <TextInput
                 mode="outlined"
-                label="Mobile No."
+                label={Strings.KMobile}
                 keyboardType="phone-pad"
                 theme={{
                   colors: {
@@ -333,7 +353,7 @@ export default function Login(props) {
             <View style={{width: width * 0.9}}>
               <TextInput
                 mode="outlined"
-                label="Password"
+                label={Strings.Password}
                 secureTextEntry={true}
                 keyboardType="name-phone-pad"
                 theme={{
@@ -378,7 +398,7 @@ export default function Login(props) {
                 fontSize: 14,
                 fontWeight: 'bold',
               }}>
-              Don't have an account? Register
+             {Strings.DonthaveanaccountRegister}
             </Text>
           </View>
         </View>
@@ -435,7 +455,7 @@ export default function Login(props) {
                         fontSize: 17,
                         fontFamily: FontFamily.regular,
                       }}>
-                      Login{' '}
+                      {Strings.LOGIN}{' '}
                     </Text>
                     {/* <Animatable.Text
                       animation="fadeIn"

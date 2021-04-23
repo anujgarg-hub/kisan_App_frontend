@@ -64,9 +64,9 @@ function renderimage(image, index) {
   );
 }
 
-const data = [
+const dataE = [
   {
-    name: 'All the profile of your Kisan can be seen here',
+    name: 'All your profile can be seen here',
     name1: 'Profile',
     pic: require('../kishanimg/1.png'),
     ml: '5 KG',
@@ -86,7 +86,7 @@ const data = [
     screen: 'KProfile',
   },
   {
-    name: 'All the Goverment Policy List of your Policy can be seen here',
+    name:'All the Goverment Policies List can be seen here',
     name1: 'All Goverment Policy List',
     pic: require('../kishanimg/1.png'),
     ml: '900 ML',
@@ -107,7 +107,7 @@ const data = [
   },
   {
     name: 'All Your Policies can be seen here',
-    name1: 'Show Policy List',
+    name1: 'Show policies list',
     pic: require('../kishanimg/1.png'),
     ml: '900 ML',
     offer: '150',
@@ -126,6 +126,72 @@ const data = [
     screen: 'KShowPolicy',
   },
 ];
+
+const dataH = [
+  {
+    name: 'आपकी प्रोफ़ाइल यहाँ देखी जा सकती है',
+    name1: 'प्रोफाइल',
+    pic: require('../kishanimg/1.png'),
+    ml: '5 KG',
+    offer: '150',
+    icon: (
+      <Aicon
+        style={{
+          color: 'white',
+          padding: 8,
+          backgroundColor: '#fc5c65',
+          borderRadius: 50,
+        }}
+        name="user"
+        size={18}
+      />
+    ),
+    screen: 'KProfile',
+  },
+  {
+    name: 'सभी शासन नीति सूची यहां देखी जा सकती है',
+    name1: 'सभी शासन नीति सूची',
+    // name1: 'All Goverment Policy List',
+    pic: require('../kishanimg/1.png'),
+    ml: '900 ML',
+    offer: '150',
+    icon: (
+      <FAIcon
+        style={{
+          color: 'white',
+          padding: 8,
+          backgroundColor: '#1ac9ff',
+          borderRadius: 50,
+        }}
+        name="users"
+        size={18}
+      />
+    ),
+    screen: 'KEmployees',
+  },
+  {
+    name: 'आपकी सभी नीति यहाँ देखी जा सकती है',
+    name1: 'नीति सूची देखें',
+    pic: require('../kishanimg/1.png'),
+    ml: '900 ML',
+    offer: '150',
+    icon: (
+      <FAIcon
+        style={{
+          color: 'white',
+          padding: 8,
+          backgroundColor: '#1ac9ff',
+          borderRadius: 50,
+        }}
+        name="users"
+        size={18}
+      />
+    ),
+    screen: 'KShowPolicy',
+  },
+];
+
+
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
@@ -349,13 +415,13 @@ export default function Category(props) {
   // setkisanid(kisanId)
 
   useEffect(() => {
-    // console.log('kisanIdonCategoryPage',props);
-
-    console.log('kisanIdonCategoryPage',kisanId);
     // fetchKisanId()
     selectedLanguage()
       .then(res => {
+        console.log(res);
         setSelectedLanguage(res);
+        console.log(Strings.Add);
+        console.log(Strings.All);
       })
       .catch(() => {});
       
@@ -547,7 +613,7 @@ export default function Category(props) {
           <View style={{marginVertical: 10}} />
           <Animatable.View duration={500} animation="zoomIn">
             <FlatList
-              data={data}
+              data={getSelectedLanguage =='Hindi' ? dataH : dataE }
               contentContainerStyle={{justifyContent: 'space-between'}}
               horizontal={false}
               scrollEnabled={true}

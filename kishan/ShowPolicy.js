@@ -41,6 +41,8 @@ import { getData, ServerURL, postData } from './FetchService';
 const {width, height} = Dimensions.get('window');
 //const BannerWidth = Dimensions.get('window').width;
 //const BannerHeight = 260;
+import {selectedLanguage} from './helper/ChangeLng';
+import Strings from './constant/LocalizedStrings';
 
 const Horidata = [
   {
@@ -137,7 +139,7 @@ function HorizontalList({item, props}) {
                       fontSize: 15,
                       fontWeight: 'bold',
                     }}>
-                   Policy Name :
+                   {Strings.PolicyName} :
 
                   </Text>
                   <Text
@@ -157,7 +159,7 @@ function HorizontalList({item, props}) {
                       fontSize: 13,
                       fontWeight: 'bold',
                     }}>
-                  kisan Id :
+                  {Strings.Kisan} {Strings.Id} :
 
                   </Text>
                
@@ -181,7 +183,7 @@ function HorizontalList({item, props}) {
                       // marginLeft: 17,
                       fontWeight: 'bold',
                     }}>
-                  Date Applied :
+                  {Strings.Dateforapply} :
 
                   </Text>
                   <Text
@@ -205,7 +207,7 @@ function HorizontalList({item, props}) {
                 
                       fontWeight: 'bold',
                     }}>
-                  Status :
+                  {Strings.Status} :
 
                   </Text>
 
@@ -495,21 +497,34 @@ const styles = StyleSheet.create({
 });
 
 export default function Employee(props) {
+  const [getSelectedLanguage, setSelectedLanguage] = useState('');
 
   const [policyList, setPolicyList] = useState([])
 
 
 
   const fetchPolicies=async()=>{
-    var kisanId = props.route.params.kisanIdd
+    var kisanId = props.route.params.kisanIdd;
+    // console.log('kisanIdddddddddddddddddddddddddddddddddddddddddddd',);
+    
 
     let body={kisanid : kisanId}
+    // console.log('bodyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy',body)
     var result = await postData('farmerpolicies/displayPolicies',body)
     console.log('fetchfarmerpolicies',result)
     setPolicyList(result)
   }
 
   useEffect(() => {
+    selectedLanguage()
+      .then(res => {
+        console.log(res);
+        setSelectedLanguage(res);
+        console.log(Strings.Add);
+        console.log(Strings.All);
+      })
+      .catch(() => {});
+      
     fetchPolicies();
   },[])
 
@@ -587,7 +602,7 @@ export default function Employee(props) {
               color: '#464646',
               fontWeight: 'bold',
             }}>
-            All Your Policies
+            {Strings.AllYourPolicies}
           </Text>
         </View>
         <View style={{marginVertical: 5}} />
@@ -614,7 +629,7 @@ export default function Employee(props) {
                     fontSize: 12,
                   }}
                   placeholderTextColor="#535353"
-                  placeholder="Search"></TextInput>
+                  placeholder={Strings.Search}></TextInput>
               </View>
             </View>
           </View>

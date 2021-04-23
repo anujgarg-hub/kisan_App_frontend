@@ -22,6 +22,7 @@ import KMainNavigationStack from './kishan/MainNavigationStack';
 //import KRegistration from './kishan/Registration';
 //import KApply from './kishan/Apply';
 
+import { strings } from './kishan/constant/LocalizedStrings';
 
 
 
@@ -37,6 +38,7 @@ const styles = StyleSheet.create({
 export default function App() {
   LogBox.ignoreAllLogs(true);
   return (
+  
     <View style={styles.mainContainer}>
       <KMainNavigationStack />
     </View>

@@ -36,6 +36,9 @@ import Autocomplete from 'react-native-autocomplete-input';
 import {Calendar, LocaleConfig} from 'react-native-calendars';
 import { postData } from './FetchService';
 const {width, height} = Dimensions.get('window');
+import {selectedLanguage} from './helper/ChangeLng';
+import Strings from './constant/LocalizedStrings';
+
 //const BannerWidth = Dimensions.get('window').width;
 //const BannerHeight = 260;
 const initialLayout = {width: Dimensions.get('window').width};
@@ -382,9 +385,24 @@ const styles = StyleSheet.create({
 
 export default function ProfileNew(props) {
   const refRBSheet = useRef();
+  const [getSelectedLanguage, setSelectedLanguage] = useState('');
+
   const [getProfileList, setProfileList] = useState([]);
 
   
+
+  useEffect(() => {
+    // fetchKisanId()
+    selectedLanguage()
+      .then(res => {
+        console.log(res);
+        setSelectedLanguage(res);
+        console.log(Strings.Add);
+        console.log(Strings.All);
+      })
+      .catch(() => {});
+      
+  }, []);
 
 
   const fetchData=async(kisanId)=>{
@@ -462,10 +480,10 @@ export default function ProfileNew(props) {
             marginTop: 10,
           }}>
           <View style={{width: width * 0.3}}>
-            <Text style={styles.texStyle}>Kisan Name</Text>
-            <Text style={styles.texStyle}>Kisan Mobile No.</Text>
-            <Text style={styles.texStyle}>Kisan email Id</Text>
-            <Text style={styles.texStyle}>Kisan address</Text>
+            <Text style={styles.texStyle}>{Strings.Kisan} {Strings.Name}</Text>
+            <Text style={styles.texStyle}>{Strings.Kisan} {Strings.KRMobile}</Text>
+            <Text style={styles.texStyle}>{Strings.Kisan} {Strings.Emailid}</Text>
+            <Text style={styles.texStyle}>{Strings.Kisan} {Strings.Address}</Text>
           </View>
           <View style={{width: width * 0.1}}>
             <MIcon style={styles.icon} name="arrow-right" />
@@ -494,7 +512,7 @@ export default function ProfileNew(props) {
   const layout = useWindowDimensions();
 
   const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([{key: 'first', title: 'Profile'}]);
+  const [routes] = React.useState([{key: 'first', title: Strings.Profile}]);
 
   const FirstRoute = () => (
     // <Animatable.View duration={2000} animation="zoomIn">
@@ -529,7 +547,7 @@ export default function ProfileNew(props) {
                   letterSpacing: 1,
                   marginLeft: 5,
                 }}>
-                Details
+                {Strings.Details}
               </Text>
             </View>
             <FlatList
@@ -638,7 +656,7 @@ export default function ProfileNew(props) {
               <View style={styles.userAddressRow}>
                 <View style={styles.userCityRow}>
                   <Text
-                    style={{fontSize: 17, alignSelf: 'center', color: '#FFF'}}>
+                    style={{fontSize: 17, alignSelf: 'center', color: '#fff'}}>
                     Kishan
                   </Text>
                 </View>

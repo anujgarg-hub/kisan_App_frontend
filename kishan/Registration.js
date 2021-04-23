@@ -36,10 +36,14 @@ import {ScrollView} from 'react-native';
 import { postData , postDataAndImage } from './FetchService';
 import {Picker} from '@react-native-picker/picker';
 // import { Button, Menu, Divider, Provider } from 'react-native-paper';
+import {selectedLanguage} from './helper/ChangeLng';
+import Strings from './constant/LocalizedStrings';
+
 
 
 const App = props => {
   const [filePath, setFilePath] = useState({});
+  const [getSelectedLanguage, setSelectedLanguage] = useState('');
 
 const [kisanId, setKisanId] = useState('')
 const [name, setName] = useState('')
@@ -119,6 +123,15 @@ const [getCityList, setCityList] = useState([]) ;
   }
 
   useEffect(()=>{
+    selectedLanguage()
+    .then(res => {
+      console.log(res);
+      setSelectedLanguage(res);
+      console.log(Strings.Add);
+      console.log(Strings.All);
+    })
+    .catch(() => {});
+    
     fetchState()
   },[])
 
@@ -328,7 +341,7 @@ const [getCityList, setCityList] = useState([]) ;
               borderColor: '#000',
               fontWeight: 'bold',
             }}>
-            Registration
+           {Strings.Registration}
           </Text>
         </View>
         <View
@@ -345,7 +358,7 @@ const [getCityList, setCityList] = useState([]) ;
               fontFamily: FontFamily.regular,
               fontSize: 11,
             }}>
-            Please enter your details.
+            {Strings.PleaseEnterYourDetail}
           </Text>
         </View>
 
@@ -379,7 +392,7 @@ const [getCityList, setCityList] = useState([]) ;
               <View style={{width: width * 0.9}}>
                 <TextInput
                   mode="outlined"
-                  label="Name"
+                  label={Strings.Name}
                   keyboardType="name-phone-pad"
                   theme={{
                     colors: {
@@ -400,7 +413,7 @@ const [getCityList, setCityList] = useState([]) ;
             <View style={{width: width * 0.9}}>
               <TextInput
                 mode="outlined"
-                label="Fathers name"
+                label={Strings.Fathersname}
                 keyboardType="name-phone-pad"
                 theme={{
                   colors: {
@@ -420,7 +433,7 @@ const [getCityList, setCityList] = useState([]) ;
             <View style={{width: width * 0.9}}>
               <TextInput
                 mode="outlined"
-                label="Mobile no."
+                label={Strings.KRMobile}
                 keyboardType="phone-pad"
                 theme={{
                   colors: {
@@ -440,7 +453,7 @@ const [getCityList, setCityList] = useState([]) ;
             <View style={{width: width * 0.9}}>
               <TextInput
                 mode="outlined"
-                label="Email ID"
+                label={Strings.Emailid}
                 keyboardType="name-phone-pad"
                 theme={{
                   colors: {
@@ -460,7 +473,7 @@ const [getCityList, setCityList] = useState([]) ;
             <View style={{width: width * 0.9}}>
               <TextInput
                 mode="outlined"
-                label="Address"
+                label={Strings.Address}
                 multiline={true}
                 numberOfLines={3}
                 keyboardType="name-phone-pad"
@@ -541,7 +554,7 @@ const [getCityList, setCityList] = useState([]) ;
                     onValueChange={(text)=>handleState(text)}
 
                     >
-                    <Picker.Item label="Select State" value="" color="#7a7a7a"  />
+                    <Picker.Item label={Strings.SelectState} value="" color="#7a7a7a"  />
                     {/* <Picker.Item label="MP" value="MP"  /> */}
                      {fillStates()} 
                   </Picker>
@@ -608,7 +621,7 @@ const [getCityList, setCityList] = useState([]) ;
                     onValueChange={(text)=>setCity(text)}
 
                     >
-                    <Picker.Item label="Select City" value="" color="#7a7a7a" />
+                    <Picker.Item label={Strings.SelectCity} value="" color="#7a7a7a" />
                     {/* <Picker.Item label="Gwl" value="Gwl"  /> */}
                     {fillCities()}
                   </Picker>
@@ -620,7 +633,7 @@ const [getCityList, setCityList] = useState([]) ;
               <View style={{width: width * 0.44, right: 2}}>
                 <TextInput
                   mode="outlined"
-                  label="Password"
+                  label={Strings.Password}
                   secureTextEntry={true}
                   keyboardType="name-phone-pad"
                   theme={{
@@ -642,7 +655,7 @@ const [getCityList, setCityList] = useState([]) ;
                 <TextInput
                   mode="outlined"
                   secureTextEntry={true}
-                  label="Confirm Password"
+                  label={Strings.ConfirmPassword}
                   keyboardType="name-phone-pad"
                   theme={{
                     colors: {
@@ -669,7 +682,7 @@ const [getCityList, setCityList] = useState([]) ;
                   style={styles.buttonStyle}
                   onPress={() => captureImage('photo')}>
                   <Text style={styles.textStyle}>
-                    <FAIcon name="image" size={20} /> Upload Picture
+                    <FAIcon name="image" size={20} /> {Strings.UploadPicture}
                   </Text>
                 </TouchableOpacity>
                 {/* <TouchableOpacity
@@ -718,7 +731,7 @@ const [getCityList, setCityList] = useState([]) ;
                         fontSize: 14,
                         fontWeight: 'bold',
                       }}>
-                      Already Registered User? Login
+                     {Strings.AlreadyRegisteredUserLogin}
                     </Text>
                   </View>
                 </View>
@@ -768,7 +781,7 @@ const [getCityList, setCityList] = useState([]) ;
                               fontSize: 17,
                               fontFamily: FontFamily.regular,
                             }}>
-                            Register
+                           {Strings.Register}
                           </Text>
 
                           <FAIcon
